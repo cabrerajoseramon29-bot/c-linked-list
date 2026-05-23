@@ -205,29 +205,27 @@ int lista_pop_back(Lista *l, int *out){
 int lista_remove(Lista *l, int valor){
     if(!l || !l->cabeza)return -1;
 
-    int temp;
-
+    /* 1- casos frontera*/
     if (l->cabeza->data == valor) {
-        return (lista_pop_front(l, &temp) == 0)? 0 : -1;
+        return lista_pop_front(l, &valor);
     }
 
+    if (l->cola->data == valor) {
+        return lista_pop_back(l, &valor);
+    }
+
+    /* 2- se encuentra en medio*/
     Nodo *anterior = l->cabeza;
     Nodo *actual = l->cabeza->sig;
-
+    
     while (actual) {
         if (actual->data == valor) {
             anterior->sig = actual->sig;
-
-            if (actual == l->cola) {
-                l->cola = anterior;
-            }
-
             free(actual);
             l->size--;
 
             return 0;
         }
-
         anterior = actual;
         actual = actual->sig;
     }
