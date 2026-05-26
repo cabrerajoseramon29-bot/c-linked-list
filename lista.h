@@ -1,32 +1,35 @@
-#ifndef LISTA_H_
-#define LISTA_H_
+#ifndef LIST_H_
+#define LIST_H_
+
+typedef struct List List;
 
 #include <stddef.h>
 
-typedef struct Lista Lista;
+/*lifecycle*/
+List *list_create(void);
+void list_destroy(List *l);
 
-/*vida util*/
-Lista *lista_create(void);
-void lista_destroy(Lista *l);
+/*access*/
+size_t list_size(const List *l);
+int list_empty(const List *l);
+int list_front(const List *l, int *out);
+int list_back(const List *l, int *out);
+int list_get(const List *l, size_t pos, int *out);
 
-/*acceso*/
-size_t lista_size(const Lista *l);
-int lista_empty(const Lista *l);
-int lista_front(const Lista *l, int *valor);
-int lista_back(const Lista *l, int *valor);
-int lista_get(const Lista *l, size_t pos, int *valor);
+/*insertion*/
+int list_push_front(List *l, int valor);
+int list_push_back(List *l, int valor);
+int list_insert_at(List *l, size_t pos, int valor);
 
-/*insert*/
-int lista_push_front(Lista *l, int valor);
-int lista_push_back(Lista *l, int valor);
-int lista_insert_at(Lista *l, size_t pos, int valor);
+/*remove*/
+int list_pop_front(List *l, int *out);
+int list_pop_back(List *l, int *out);
+int list_remove(List *l, int valor, int *out);
 
-/*eliminar*/
-int lista_pop_front(Lista *l, int *out);
-int lista_pop_back(Lista *l, int *out);
-int lista_remove(Lista *l, int valor);
+/*operation*/
+int list_reverse(List *l);
 
-/*modificar*/
-int lista_reverse(Lista *l);
+/*print*/
+void list_print(const List *l);
 
 #endif
